@@ -1,12 +1,16 @@
 $bg-blue: #a7bcff;
+$bg-dark-purple: #2f2d52;
 $text-purple: #5d5b8d;
 $ligh-blue: #a7bcff;
 $btn-color: #7b96ec;
+$border: #3e3c61;
+$text-white: #ddddf7;
 
 *{
     padding: 0;
     margin: 0;
 }
+
 .formContainer {
     height: 100vh;
     background-color: $bg-blue;
@@ -64,5 +68,105 @@ $btn-color: #7b96ec;
             font-size: 12px;
             margin-top: 10px;
         }
+    }
+}
+
+.home{
+    background-color: $bg-blue;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .container{
+        box-shadow: 0 0 5px 5px #3e3c61;
+        border-radius: 10px;
+        width: 65%;
+        height: 80%;
+        display: flex;
+        overflow: hidden;
+
+        .sidebar{
+            flex: 1; 
+            background-color: $border;
+            
+            .navbar{
+                height: 50px;
+                display: flex;
+                align-items: center;
+                background-color: $bg-dark-purple;
+                padding: 10px;
+                justify-content: space-between;
+                color: $text-white;
+
+                .logo{
+                    font-weight: bald;
+                }
+
+                .user{
+                    display: flex; 
+                    gap: 10px;
+                    align-items: center;
+
+                    img{
+                        height: 24px;
+                        width: 24px;
+                        border-radius: 50%;
+                        background-color: $text-white;
+                        object-fit: cover;
+                    }
+
+                    button{
+                        padding: 5px;
+                        background-color: $text-purple;
+                        color: $text-white;
+                        font-size: 10px;
+                        border: none;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .search{
+                border-bottom: 1px solid grey;
+
+                .searchForm{
+
+                    input{
+                        background-color: transparent;
+                        border: none;
+                        color: white;
+                        outline: none;
+                        padding: 10px;
+
+                        &::placeholder{
+                            color: lightgray;
+                        }
+                    }
+                }
+            }
+
+            .userChat{
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                color: white;
+                cursor: pointer;
+
+                &:hover{
+                    background-color: $bg-dark-purple;
+                }
+
+                img{
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+            }
+
+        }
+        .chat{flex: 2;}
     }
 }
