@@ -171,6 +171,7 @@ $text-white: #ddddf7;
                         font-size: 18px;
                         font-weight: 500;
                     }
+
                     p {
                         font-size: 14px;
                         color: lightgray;
@@ -182,6 +183,91 @@ $text-white: #ddddf7;
 
         .chat {
             flex: 2;
+
+            .chatInfo {
+                height: 50px;
+                background-color: $text-purple;
+                align-items: center;
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+                color: lightgray;
+                font-weight: bold;
+                font-size: 18px;
+
+                .chatIcons {
+                    display: flex;
+                    gap: 10px;
+
+                    img {
+                        height: 24px;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .messages {
+                background-color: $text-white;
+                padding: 10px;
+                height: calc(100% - 160px);
+
+                .message{
+                    display: flex;
+                    gap: 20px;
+                    
+                    .messageInfo{
+                        img{
+                            width: 40px;
+                            height: 40px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                        }
+                    }
+                    .messageContent{
+
+                    }
+                }
+            }
+
+            .input {
+                height: 50px;
+                background-color: white;
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                input{
+                    width: 100%;
+                    border: none;
+                    font-size: 16px;
+                    color: #2f2d52;
+                    outline: none;
+
+                    &::placeholder{
+                        color: lightgray;
+                    }
+                }
+
+                .send{
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    img{
+                        height: 24px;
+                        cursor: pointer;
+                    }
+
+                    button{
+                        padding: 10px 15px;
+                        border: none;
+                        cursor: pointer;
+                        color: white;
+                        background-color: $text-purple;
+                    }
+                }
+            }
         }
     }
 }
