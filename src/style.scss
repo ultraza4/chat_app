@@ -210,21 +210,58 @@ $text-white: #ddddf7;
                 background-color: $text-white;
                 padding: 10px;
                 height: calc(100% - 160px);
+                overflow: scroll;
 
-                .message{
+                .message {
                     display: flex;
                     gap: 20px;
-                    
-                    .messageInfo{
-                        img{
+                    margin-bottom: 20px;
+
+                    .messageInfo {
+                        display: flex;
+                        flex-direction: column;
+                        color: gray;
+                        font-weight: 300;
+
+                        img {
                             width: 40px;
                             height: 40px;
                             border-radius: 50%;
                             object-fit: cover;
                         }
                     }
-                    .messageContent{
 
+                    .messageContent {
+                        max-width: 80%;
+                        display: flex;
+                        gap: 10px;
+                        flex-direction: column;
+
+                        p {
+                            background-color: white;
+                            padding: 10px 20px;
+                            border-radius: 0px 10px 10px 10px;
+                            max-width: max-content;
+                        }
+
+                        img {
+                            width: 50%;
+                        }
+                    }
+
+                    &.owner {
+                        flex-direction: row-reverse;
+
+                        .messageContent {
+                            align-items: flex-end; 
+
+                            p {
+                                background-color: #8da4f1;
+                                color: white;
+                                border-radius: 10px 0 10px 10px;
+                            }
+                        
+                        }
                     }
                 }
             }
@@ -237,29 +274,29 @@ $text-white: #ddddf7;
                 align-items: center;
                 justify-content: space-between;
 
-                input{
+                input {
                     width: 100%;
                     border: none;
                     font-size: 16px;
                     color: #2f2d52;
                     outline: none;
 
-                    &::placeholder{
+                    &::placeholder {
                         color: lightgray;
                     }
                 }
 
-                .send{
+                .send {
                     display: flex;
                     align-items: center;
                     gap: 10px;
 
-                    img{
+                    img {
                         height: 24px;
                         cursor: pointer;
                     }
 
-                    button{
+                    button {
                         padding: 10px 15px;
                         border: none;
                         cursor: pointer;
