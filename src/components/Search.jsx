@@ -1,6 +1,10 @@
 import React from 'react'
+import { useState } from 'react'
 
 const Search = () => {
+  const [userName, setUserName] = useState("");
+
+
   return (
     <div className='search'>
       <div className="searchForm">

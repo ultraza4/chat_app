@@ -5,7 +5,7 @@ import { auth, storage, db } from "../firebase";
 import { useState } from 'react';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 const Register = () => {
@@ -24,27 +24,29 @@ const Register = () => {
       const date = new Date().getTime();
       const storageRef = ref(storage, `${displayName + date}`);
 
-      await uploadBytesResumable(storageRef, file).then(() => {
+      await uploadBytesResumable(storageRef, file).then(async () => {
         getDownloadURL(storageRef).then(async (downloadURL) => {
           try {
             await updateProfile(res.user, {
               displayName,
               photoURL: downloadURL
-            })
+            });
 
             await setDoc(doc(db, "users", res.user.uid), {
               uid: res.user.uid,
               displayName,
               email,
               photoURL: downloadURL
-            })
+            });
+            await setDoc(doc(db, "userChats", res.user.uid), {
+              
+            });
           } catch (error) {
             setErr(true)
           }
         });
       });
 
-      <Navigate to="/" />
     } catch (error) {
       setErr(true)
     }
