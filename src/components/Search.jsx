@@ -1,21 +1,85 @@
-import React from 'react'
-import { useState } from 'react'
+import React from 'react';
+import { useState } from 'react';
+import { collection, query, where, getDoc, getDocs, setDoc, doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "../firebase";
+import { useContext } from 'react';
+import { AuthContext } from "../context/AuthContext";
 
 const Search = () => {
   const [userName, setUserName] = useState("");
+  const [user, setUser] = useState(null);
+  const [err, setErr] = useState(null);
 
+  const {currentUser} = useContext(AuthContext);
+ 
+  const handleKey = (e) => {
+    e.code === "Enter" && handldeSearch();
+  }
+
+  const handldeSearch = async () => {
+    const citiesRef = collection(db, "users")
+    const q = query(citiesRef, where("displayName", "==", userName));
+
+    try {
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        setUser(doc.data())
+      });
+    } catch (error) {
+      setErr(true)
+    }
+  }
+
+  const handleSelect = async () => {
+    //check whether the group(chats in firestore) exist, if not create
+    const combinedId = currentUser.uid > user.uid ? currentUser.uid + user.uid : user.uid + currentUser.uid;
+    try {
+      const res = await getDoc(doc(db, "chats", combinedId));
+      if(!res.exists()){
+        //create a chat in chats collection 
+        await setDoc(doc(db, "chats", combinedId),{messages: []});
+
+        //create user chats
+        await updateDoc(doc(db, "userChats", currentUser.uid), {
+          [combinedId + ".userInfo"]: {
+            uid: user.id,
+            displayName: user.displayName,
+            photoURL: user.photoURL
+          },
+          [combinedId +".date"]: serverTimestamp()
+        })
+
+        await updateDoc(doc(db, "userChats", user.uid), {
+          [combinedId +".userInfo"]: {
+            uid: currentUser.id,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoURL
+          },
+          [combinedId +".date"]: serverTimestamp()
+        })
+      }
+    } catch (error) {
+      setErr(true)
+    }
+  }
 
   return (
     <div className='search'>
       <div className="searchForm">
-        <input type="" placeholder='Find a user'/>
+        <input
+          type="text"
+          placeholder='Find a user'
+          onKeyDown={handleKey}
+          onChange={e => setUserName(e.target.value)}
+        />
       </div>
-      <div className="userChat">
-        <img src="https://images.pexels.com/photos/13415959/pexels-photo-13415959.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load" alt="" />
+      {err && <span>User not found!</span>}
+      {user &&  <div className="userChat" onClick={handleSelect}>
+        <img src={user.photoURL} alt="" />
         <div className="userChatInfo">
-          <span>John</span>
+          <span>{user.displayName}</span>
         </div>
-      </div>
+      </div>}
     </div>
   )
 }
